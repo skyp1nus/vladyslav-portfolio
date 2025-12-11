@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   turbopack: { root: __dirname, },
   output: "export",
   images: { unoptimized: true, },
-  basePath: "/vladyslav-portfolio/"
+  basePath: "/vladyslav-portfolio"
 };
 
 export default nextConfig;
