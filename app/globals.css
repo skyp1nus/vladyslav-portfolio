@@ -1,26 +1,74 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-azeret-mono);
+
+  /* Light theme colors from Figma */
+  --color-primary: #E4E4E7;
+  --color-secondary: #D4D4D8;
+  --color-foreground: #27272A;
+  --color-foreground-secondary: #52525C;
+  --color-foreground-muted: #9F9FA9;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  --background: #E4E4E7;
+  --foreground: #27272A;
+  --secondary: #D4D4D8;
+  --muted: #52525C;
+  --muted-foreground: #9F9FA9;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #18181B;
+    --foreground: #E4E4E7;
+    --secondary: #27272A;
+    --muted: #A1A1AA;
+    --muted-foreground: #71717A;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground);
+}
+
+/* Embla Carousel styles */
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  gap: 16px;
+}
+
+.embla__slide {
+  flex: 0 0 400px;
+  min-width: 0;
 }
