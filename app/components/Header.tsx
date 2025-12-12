@@ -21,9 +21,9 @@ export function Header() {
 
         {/* Logo */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
-          <a href="/" className="block hover:opacity-70 transition-opacity">
-            <span className="text-lg font-mono font-medium tracking-wide text-[var(--foreground)]">
-              &lt;vladyslav /&gt;
+          <a href="/vladyslav-portfolio" className="block hover:opacity-70 transition-opacity">
+            <span className="text-[48px] font-semibold tracking-tight text-[var(--foreground)] uppercase font-[family-name:var(--font-space-grotesk)]">
+              vy
             </span>
           </a>
         </div>
