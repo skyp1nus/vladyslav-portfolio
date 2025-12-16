@@ -5,7 +5,7 @@ const apps = [
     name: "Artman",
     description:
       "A film director simulator where you live the life of a boy who loved cinema since childhood. Create your own path in the movie industry.",
-    poster: "/vladyslav-portfolio/posters/games/ArtmanPoster.webp",
+    poster: "/posters/games/ArtmanPoster.webp",
   },
   {
     name: "Soon",
