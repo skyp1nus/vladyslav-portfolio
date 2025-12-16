@@ -39,9 +39,22 @@ export function BeautifulSoftware() {
 
   useEffect(() => {
     if (!emblaApi) return;
-    onSelect();
+
+    const updateScrollState = () => {
+      setCanScrollPrev(emblaApi.canScrollPrev());
+      setCanScrollNext(emblaApi.canScrollNext());
+    };
+
+    // Use requestAnimationFrame to defer state update
+    requestAnimationFrame(updateScrollState);
+
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
   }, [emblaApi, onSelect]);
 
   return (
@@ -82,7 +95,7 @@ export function BeautifulSoftware() {
                 <div className="w-full h-full rounded-lg bg-[var(--secondary)] overflow-hidden">
                   <div className={`w-full h-full bg-gradient-to-br ${slide.color} flex items-center justify-center`}>
                     <span className="text-white/50 text-lg font-light">
-                      Project {slide.id}
+                      Soon
                     </span>
                   </div>
                 </div>

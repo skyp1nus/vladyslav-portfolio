@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 h-24 pointer-events-none">
@@ -21,11 +23,11 @@ export function Header() {
 
         {/* Logo */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
-          <a href="/" className="block hover:opacity-70 transition-opacity">
-            <span className="text-lg font-mono font-medium tracking-wide text-[var(--foreground)]">
-              &lt;vladyslav /&gt;
+          <Link href="/" className="block hover:opacity-70 transition-opacity">
+            <span className="text-[28px] font-semibold tracking-tight text-[var(--foreground)] lowercase font-[family-name:var(--font-space-grotesk)]">
+              yeromenko.dev
             </span>
-          </a>
+          </Link>
         </div>
       </div>
     </header>

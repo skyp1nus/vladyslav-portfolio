@@ -3,8 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   turbopack: { root: __dirname, },
   output: "export",
-  images: { unoptimized: true, },
-  basePath: "/vladyslav-portfolio"
+  images: { unoptimized: true, }
 };
 
 export default nextConfig;

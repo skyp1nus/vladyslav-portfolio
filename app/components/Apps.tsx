@@ -1,14 +1,16 @@
+import Image from "next/image";
+
 const apps = [
   {
     name: "Artman",
     description:
       "A film director simulator where you live the life of a boy who loved cinema since childhood. Create your own path in the movie industry.",
-    gradient: "from-amber-400 to-red-500",
+    poster: "/posters/games/ArtmanPoster.webp",
   },
   {
-    name: "Vorteil",
+    name: "Soon",
     description:
-      "A multiplayer tabletop card game for those who love strategic battles. Challenge your friends and prove your tactical skills.",
+      "Soon",
     gradient: "from-purple-400 to-indigo-500",
   },
 ];
@@ -50,15 +52,25 @@ export function Apps() {
                 </p>
               </div>
 
-              {/* App preview placeholder */}
-              <div className="flex-1 min-h-[400px] md:min-h-[500px]">
-                <div
-                  className={`w-full h-full bg-gradient-to-br ${app.gradient} flex items-center justify-center`}
-                >
-                  <span className="text-white/50 text-lg font-light">
-                    {app.name} Preview
-                  </span>
-                </div>
+              {/* App preview */}
+              <div className="overflow-hidden flex-1">
+                {app.poster ? (
+                  <Image
+                    src={app.poster}
+                    alt={`${app.name} poster`}
+                    width={1362}
+                    height={1932}
+                    className="w-full h-auto"
+                  />
+                ) : (
+                  <div
+                    className={`w-full h-full min-h-[400px] md:min-h-[500px] bg-gradient-to-br ${app.gradient} flex items-center justify-center`}
+                  >
+                    <span className="text-white/50 text-lg font-light">
+                      {app.name} Preview
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           ))}
