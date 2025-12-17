@@ -19,8 +19,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Vladyslav - GameDev Developer",
-  description: "GameDev Developer. Turning ideas into games. Nothing is impossible — it's all a matter of time.",
+  title: "Vladyslav Yeromenko - Developer",
+  description: "GameDev. Turning ideas into games. Nothing is impossible — it's all a matter of time.",
 };
 
 export default function RootLayout({
