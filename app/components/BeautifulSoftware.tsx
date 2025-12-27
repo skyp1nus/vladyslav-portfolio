@@ -1,15 +1,25 @@
 "use client";
 
 import useEmblaCarousel from "embla-carousel-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, ComponentType } from "react";
+import { MemoryCards, Snake, Breakout, FlappyBird, DinoRun } from "./games";
+import { GamePreviewCard } from "./games/GamePreviewCard";
+import { GameModal } from "./games/GameModal";
+import { GameProps } from "./games/types";
 
-const slides = [
-  { id: 1, color: "from-purple-500 to-pink-500" },
-  { id: 2, color: "from-blue-500 to-cyan-500" },
-  { id: 3, color: "from-green-500 to-emerald-500" },
-  { id: 4, color: "from-orange-500 to-yellow-500" },
-  { id: 5, color: "from-red-500 to-rose-500" },
-  { id: 6, color: "from-indigo-500 to-violet-500" },
+interface Game {
+  id: string;
+  name: string;
+  description: string;
+  component: ComponentType<GameProps>;
+}
+
+const games: Game[] = [
+  { id: "memory", name: "Memory", description: "Find all matching pairs", component: MemoryCards },
+  { id: "snake", name: "Snake", description: "Eat food, grow longer", component: Snake },
+  { id: "breakout", name: "Breakout", description: "Break all the bricks", component: Breakout },
+  { id: "flappy", name: "Flappy", description: "Fly through pipes", component: FlappyBird },
+  { id: "dino", name: "Dino Run", description: "Jump over obstacles", component: DinoRun },
 ];
 
 export function BeautifulSoftware() {
@@ -22,6 +32,7 @@ export function BeautifulSoftware() {
 
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
+  const [openGameId, setOpenGameId] = useState<string | null>(null);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -45,7 +56,6 @@ export function BeautifulSoftware() {
       setCanScrollNext(emblaApi.canScrollNext());
     };
 
-    // Use requestAnimationFrame to defer state update
     requestAnimationFrame(updateScrollState);
 
     emblaApi.on("select", onSelect);
@@ -56,6 +66,8 @@ export function BeautifulSoftware() {
       emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi, onSelect]);
+
+  const openGame = games.find((g) => g.id === openGameId);
 
   return (
     <section className="flex flex-col gap-4 py-16">
@@ -87,18 +99,16 @@ export function BeautifulSoftware() {
           }}
         >
           <div className="flex gap-4">
-            {slides.map((slide) => (
+            {games.map((game) => (
               <div
-                key={slide.id}
+                key={game.id}
                 className="flex-shrink-0 w-[300px] sm:w-[350px] md:w-[400px] aspect-square"
               >
-                <div className="w-full h-full rounded-lg bg-[var(--secondary)] overflow-hidden">
-                  <div className={`w-full h-full bg-gradient-to-br ${slide.color} flex items-center justify-center`}>
-                    <span className="text-white/50 text-lg font-light">
-                      Soon
-                    </span>
-                  </div>
-                </div>
+                <GamePreviewCard
+                  name={game.name}
+                  description={game.description}
+                  onPlay={() => setOpenGameId(game.id)}
+                />
               </div>
             ))}
             {/* Extra padding at the end for smooth scrolling */}
@@ -128,6 +138,11 @@ export function BeautifulSoftware() {
           </button>
         </div>
       </div>
+
+      {/* Game Modal */}
+      {openGame && (
+        <GameModal game={openGame} onClose={() => setOpenGameId(null)} />
+      )}
     </section>
   );
 }
