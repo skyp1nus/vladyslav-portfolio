@@ -1,25 +1,15 @@
 "use client";
 
 import useEmblaCarousel from "embla-carousel-react";
-import { useCallback, useEffect, useState, ComponentType } from "react";
-import { MemoryCards, Snake, Breakout, FlappyBird, DinoRun } from "./games";
-import { GamePreviewCard } from "./games/GamePreviewCard";
-import { GameModal } from "./games/GameModal";
-import { GameProps } from "./games/types";
+import { useCallback, useEffect, useState } from "react";
 
-interface Game {
-  id: string;
-  name: string;
-  description: string;
-  component: ComponentType<GameProps>;
-}
-
-const games: Game[] = [
-  { id: "memory", name: "Memory", description: "Find all matching pairs", component: MemoryCards },
-  { id: "snake", name: "Snake", description: "Eat food, grow longer", component: Snake },
-  { id: "breakout", name: "Breakout", description: "Break all the bricks", component: Breakout },
-  { id: "flappy", name: "Flappy", description: "Fly through pipes", component: FlappyBird },
-  { id: "dino", name: "Dino Run", description: "Jump over obstacles", component: DinoRun },
+const galleryItems = [
+  { id: "1", title: "Sunset", gradient: "from-orange-400 via-pink-500 to-purple-600" },
+  { id: "2", title: "Ocean", gradient: "from-cyan-400 via-blue-500 to-indigo-600" },
+  { id: "3", title: "Forest", gradient: "from-green-400 via-emerald-500 to-teal-600" },
+  { id: "4", title: "Aurora", gradient: "from-violet-400 via-fuchsia-500 to-pink-500" },
+  { id: "5", title: "Dawn", gradient: "from-amber-300 via-rose-400 to-pink-500" },
+  { id: "6", title: "Midnight", gradient: "from-slate-600 via-blue-700 to-indigo-900" },
 ];
 
 export function BeautifulSoftware() {
@@ -32,7 +22,6 @@ export function BeautifulSoftware() {
 
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(true);
-  const [openGameId, setOpenGameId] = useState<string | null>(null);
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -67,8 +56,6 @@ export function BeautifulSoftware() {
     };
   }, [emblaApi, onSelect]);
 
-  const openGame = games.find((g) => g.id === openGameId);
-
   return (
     <section className="flex flex-col gap-4 py-16">
       {/* Title and description */}
@@ -76,15 +63,15 @@ export function BeautifulSoftware() {
         {/* Title row */}
         <div className="md:ml-[17%]">
           <h3 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)] max-w-[500px]">
-            <span className="block">I aim to create games</span>
-            <span className="block">that stay with you</span>
+            <span className="block">A gallery of work</span>
+            <span className="block">worth remembering</span>
           </h3>
         </div>
         {/* Description row - below and to the right */}
         <div className="mt-16 md:mt-[128px] md:ml-[60%]">
           <p className="text-[15px] font-light leading-[1.74] tracking-wide text-[var(--muted)] max-w-[500px]">
-            For me, game development is more than just code and graphics. It&apos;s an opportunity to tell a story, evoke emotions, and give players a unique experience. I believe that{" "}
-            <span className="font-bold">nothing is impossible</span> — it&apos;s all a matter of time and persistence.
+            Every project tells a story. I believe that{" "}
+            <span className="font-bold">craft and intention</span> turn good work into something that stays with people long after they&apos;ve moved on.
           </p>
         </div>
       </div>
@@ -99,16 +86,18 @@ export function BeautifulSoftware() {
           }}
         >
           <div className="flex gap-4">
-            {games.map((game) => (
+            {galleryItems.map((item) => (
               <div
-                key={game.id}
+                key={item.id}
                 className="flex-shrink-0 w-[300px] sm:w-[350px] md:w-[400px] aspect-square"
               >
-                <GamePreviewCard
-                  name={game.name}
-                  description={game.description}
-                  onPlay={() => setOpenGameId(game.id)}
-                />
+                <div
+                  className={`w-full h-full rounded-2xl bg-gradient-to-br ${item.gradient} flex items-end p-6 shadow-lg`}
+                >
+                  <span className="text-white text-xl font-semibold drop-shadow-md">
+                    {item.title}
+                  </span>
+                </div>
               </div>
             ))}
             {/* Extra padding at the end for smooth scrolling */}
@@ -138,11 +127,6 @@ export function BeautifulSoftware() {
           </button>
         </div>
       </div>
-
-      {/* Game Modal */}
-      {openGame && (
-        <GameModal game={openGame} onClose={() => setOpenGameId(null)} />
-      )}
     </section>
   );
 }
