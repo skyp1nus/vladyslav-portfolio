@@ -14,14 +14,44 @@ interface Experience {
 
 const experiences: Experience[] = [
   {
-    company: "WayHeart",
-    companyNote: "startup",
-    role: "as a Unity Developer",
-    period: "2023 - current",
+    company: "Wayheart",
+    companyNote: "own Unity startup",
+    role: "Founder & Lead Developer",
+    period: "May 2023 — Present",
     paragraphs: [
       {
-        text: "I'm the sole developer on the project — responsible for everything from architecture to animations and effects. This is my first step into gamedev, where I learn by doing while ",
-        boldText: "building the game of my dreams.",
+        text: "Building an original Unity game from scratch — gameplay systems, art pipeline, backend and CI. I own the full stack: Unity client, a small ASP.NET Core backend, and ",
+        boldText: "everything in between.",
+      },
+      {
+        text: "Over the last two years I also built internal AI agents and automation pipelines to handle routine dev tasks — ",
+        boldText: "cutting ops time and staying focused on what matters.",
+      },
+    ],
+  },
+  {
+    company: "FlexDev",
+    companyNote: "",
+    role: ".NET / Angular Developer",
+    period: "Jul 2020 — May 2022",
+    paragraphs: [
+      {
+        text: "Commercial product development in a small delivery team. Primary project: KS — a system that monitors junior developers and signals when senior help is needed. I developed the ASP.NET Core Web API backend, maintained ",
+        boldText: "end-to-end .NET + Angular features,",
+        textAfter: " and implemented a WPF companion app used on developer workstations.",
+      },
+    ],
+  },
+  {
+    company: "FreshCode",
+    companyNote: "university practice",
+    role: "Intern Developer",
+    period: "2021 · 3 months",
+    paragraphs: [
+      {
+        text: "Built a Trello-style board app with Node.js, MongoDB and Docker — learned the ",
+        boldText: "full stack from scratch",
+        textAfter: " under a tight deadline and received a top grade.",
       },
     ],
   },
@@ -29,7 +59,7 @@ const experiences: Experience[] = [
     company: "Zaporizhzhia National University",
     companyNote: "",
     role: "Bachelor's degree, Software Engineering",
-    period: "2018 - 2022",
+    period: "Sep 2018 — Sep 2022",
     paragraphs: [
       {
         text: "My first real experience with code, teamwork, and learning from ",

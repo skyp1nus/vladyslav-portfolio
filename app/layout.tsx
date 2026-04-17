@@ -19,8 +19,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Vladyslav Yeromenko - Developer",
-  description: "Software Developer. Turning ideas into reality. Nothing is impossible — it's all a matter of time.",
+  title: "Vladyslav Yeromenko — .NET / Fullstack / AI Agent Engineer",
+  description: ".NET backend, Angular/Next.js frontend and AI agents. 4+ years shipping features end-to-end.",
 };
 
 export default function RootLayout({
