@@ -22,26 +22,40 @@ export function Contact() {
           </h2>
         </div>
 
-        {/* Email and copy button */}
+        {/* Email (click to copy) + CV download */}
         <div className="flex justify-center mb-4">
           <div className="flex items-center gap-2">
-            <a
-              href="mailto:vy.skyp1nus@gmail.com"
-              className="bg-[var(--secondary)] rounded-lg px-6 py-2.5 text-[13px] font-normal tracking-[0.055em] uppercase text-[var(--foreground)] hover:opacity-80 transition-opacity"
-            >
-              vy.skyp1nus@gmail.com
-            </a>
             <button
               onClick={copyEmail}
-              className="w-10 h-10 bg-[var(--secondary)] rounded-lg flex items-center justify-center text-[var(--foreground)] hover:opacity-80 transition-opacity relative"
-              title="Copy email"
+              title={copied ? "Copied!" : "Click to copy"}
+              className="bg-[var(--secondary)] rounded-lg px-6 py-2.5 text-[13px] font-normal tracking-[0.055em] uppercase text-[var(--foreground)] hover:opacity-80 transition-opacity relative overflow-hidden"
             >
-              {copied ? (
+              <span
+                className={`inline-block transition-all duration-300 ${
+                  copied ? "opacity-0 -translate-y-2" : "opacity-100 translate-y-0"
+                }`}
+              >
+                vy.skyp1nus@gmail.com
+              </span>
+              <span
+                className={`absolute inset-0 flex items-center justify-center gap-1.5 transition-all duration-300 ${
+                  copied ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                }`}
+              >
                 <Icon icon="mdi:check" width={14} />
-              ) : (
-                <Icon icon="mdi:content-copy" width={14} />
-              )}
+                Copied
+              </span>
             </button>
+            <a
+              href="/cv.pdf"
+              download="Vladyslav_Yeromenko_CV.pdf"
+              title="Download CV"
+              aria-label="Download CV"
+              className="h-10 px-3 bg-[var(--secondary)] rounded-lg flex items-center gap-1.5 text-[var(--foreground)] hover:opacity-80 transition-opacity"
+            >
+              <Icon icon="mdi:tray-arrow-down" width={16} />
+              <span className="text-[13px] font-normal tracking-[0.055em] uppercase">CV</span>
+            </a>
           </div>
         </div>
 
