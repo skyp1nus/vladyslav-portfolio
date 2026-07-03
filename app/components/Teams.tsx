@@ -87,9 +87,9 @@ export function Teams() {
         <div className="grid grid-cols-12 gap-4 mb-16">
           <div className="col-span-12 md:col-start-3 md:col-span-6">
             <Reveal>
-              <h3 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)]">
+              <h2 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)]">
                 <span className="block">Experience</span>
-              </h3>
+              </h2>
             </Reveal>
           </div>
         </div>

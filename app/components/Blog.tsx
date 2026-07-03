@@ -18,9 +18,9 @@ export function Blog() {
         <div className="mb-16">
           <div className="md:ml-[17%]">
             <Reveal>
-              <h3 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)]">
+              <h2 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)]">
                 Writing
-              </h3>
+              </h2>
             </Reveal>
           </div>
           <div className="mt-8 md:mt-[80px] md:ml-[60%]">
@@ -49,9 +49,9 @@ export function Blog() {
                       <span aria-hidden="true">·</span>
                       <span>{post.readingTime}</span>
                     </div>
-                    <h4 className="text-[26px] font-bold leading-[1.3] text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
+                    <h3 className="text-[26px] font-bold leading-[1.3] text-[var(--foreground)] transition-colors group-hover:text-[var(--accent)]">
                       {post.title}
-                    </h4>
+                    </h3>
                     <p className="text-[15px] font-light leading-[1.6] text-[var(--muted)]">
                       {post.excerpt}
                     </p>

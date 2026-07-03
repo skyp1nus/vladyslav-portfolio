@@ -9,9 +9,9 @@ export function Apps() {
         <div className="mb-16">
           <div className="md:ml-[17%]">
             <Reveal>
-              <h3 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)]">
+              <h2 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)]">
                 Games I&apos;m Building
-              </h3>
+              </h2>
             </Reveal>
           </div>
           <div className="mt-8 md:mt-[80px] md:ml-[60%]">
@@ -35,9 +35,9 @@ export function Apps() {
                   In development
                 </span>
               </div>
-              <h4 className="text-4xl md:text-5xl font-black tracking-tight text-[var(--foreground)]">
+              <h3 className="text-4xl md:text-5xl font-black tracking-tight text-[var(--foreground)]">
                 Artman
-              </h4>
+              </h3>
               <p className="text-[15px] font-light leading-[1.74] tracking-wide text-[var(--muted)] max-w-[420px]">
                 A film director simulator where you live the life of a boy who
                 loved cinema since childhood. Create your own path in the movie

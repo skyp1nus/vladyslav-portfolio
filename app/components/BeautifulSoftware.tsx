@@ -511,10 +511,10 @@ export function BeautifulSoftware() {
       <div className="px-4 max-w-[1248px] mx-auto w-full">
         <div className="md:ml-[17%]">
           <Reveal>
-            <h3 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)] max-w-[500px]">
+            <h2 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)] max-w-[500px]">
               <span className="block">A gallery of work</span>
               <span className="block">worth remembering</span>
-            </h3>
+            </h2>
           </Reveal>
         </div>
         <div className="mt-16 md:mt-[128px] md:ml-[60%]">
