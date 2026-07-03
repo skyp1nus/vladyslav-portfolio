@@ -56,7 +56,64 @@ export const metadata: Metadata = {
     description,
     images: ["/og.png"],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+/* Schema.org structured data for rich results */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: "Vladyslav Yeromenko",
+      url: siteUrl,
+      email: "mailto:yeromenko.dev@gmail.com",
+      image: `${siteUrl}/og.png`,
+      jobTitle: ".NET / Fullstack / AI Agent Engineer",
+      sameAs: [
+        "https://github.com/skyp1nus",
+        "https://www.linkedin.com/in/skyp1nus/",
+        "https://t.me/skyp1nus",
+      ],
+      knowsAbout: [
+        "C#",
+        ".NET",
+        "ASP.NET Core",
+        "AI agents",
+        "Claude API",
+        "Model Context Protocol",
+        "Next.js",
+        "Angular",
+        "TypeScript",
+        "Unity",
+        "PostgreSQL",
+      ],
+      worksFor: { "@type": "Organization", name: "Wayheart" },
+      alumniOf: {
+        "@type": "CollegeOrUniversity",
+        name: "Zaporizhzhia National University",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "yeromenko.dev",
+      description,
+      publisher: { "@id": `${siteUrl}/#person` },
+      inLanguage: "en",
+    },
+  ],
 };
 
 export const viewport: Viewport = {
@@ -80,6 +137,10 @@ export default function RootLayout({
         className={`${inter.variable} ${azeretMono.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <noscript>
           <style>{`.reveal{opacity:1 !important;transform:none !important}`}</style>
         </noscript>

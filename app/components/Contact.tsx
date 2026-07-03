@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Icon } from "./Icons";
 import { Reveal } from "./Reveal";
 
-const EMAIL = "vy.skyp1nus@gmail.com";
+const EMAIL = "yeromenko.dev@gmail.com";
 
 const socials = [
   { name: "GitHub", href: "https://github.com/skyp1nus", icon: "github" },
