@@ -5,6 +5,7 @@ import { Teams } from "./components/Teams";
 import { Apps } from "./components/Apps";
 import { Blog } from "./components/Blog";
 import { Contact } from "./components/Contact";
+import { Footer } from "./components/Footer";
 
 export default function Home() {
   return (
@@ -21,6 +22,8 @@ export default function Home() {
           <Contact />
         </article>
       </main>
+
+      <Footer />
     </div>
   );
 }

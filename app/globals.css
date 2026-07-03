@@ -3,30 +3,70 @@
 @theme inline {
   --font-sans: var(--font-inter);
   --font-mono: var(--font-azeret-mono);
-
-  /* Light theme colors from Figma */
-  --color-primary: #E4E4E7;
-  --color-secondary: #D4D4D8;
-  --color-foreground: #27272A;
-  --color-foreground-secondary: #52525C;
-  --color-foreground-muted: #9F9FA9;
+  --font-heading: var(--font-space-grotesk);
 }
 
 :root {
-  --background: #E4E4E7;
-  --foreground: #27272A;
-  --secondary: #D4D4D8;
-  --muted: #52525C;
-  --muted-foreground: #9F9FA9;
+  --background: #e4e4e7;
+  --foreground: #27272a;
+  --secondary: #d4d4d8;
+  --muted: #52525c;
+  --muted-foreground: #9f9fa9;
+  --border: rgba(39, 39, 42, 0.12);
+  --accent: #3b82f6;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --background: #18181b;
+  --foreground: #e4e4e7;
+  --secondary: #27272a;
+  --muted: #a1a1aa;
+  --muted-foreground: #71717a;
+  --border: rgba(228, 228, 231, 0.14);
+  --accent: #60a5fa;
+  color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #18181B;
-    --foreground: #E4E4E7;
-    --secondary: #27272A;
-    --muted: #A1A1AA;
-    --muted-foreground: #71717A;
+  :root:not([data-theme="light"]) {
+    --background: #18181b;
+    --foreground: #e4e4e7;
+    --secondary: #27272a;
+    --muted: #a1a1aa;
+    --muted-foreground: #71717a;
+    --border: rgba(228, 228, 231, 0.14);
+    --accent: #60a5fa;
+    color-scheme: dark;
+  }
+}
+
+/* Dark-mode fallback for logos that are too dark on a dark surface */
+:root[data-theme="dark"] .logo-dark-invert {
+  filter: invert(1) grayscale(1) brightness(1.75);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo-dark-invert {
+    filter: invert(1) grayscale(1) brightness(1.75);
+  }
+}
+
+/* Theme toggle icon: driven by CSS so SSR markup never mismatches */
+.theme-icon-sun {
+  display: none;
+}
+:root[data-theme="dark"] .theme-icon-sun {
+  display: block;
+}
+:root[data-theme="dark"] .theme-icon-moon {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-icon-sun {
+    display: block;
+  }
+  :root:not([data-theme="light"]) .theme-icon-moon {
+    display: none;
   }
 }
 
@@ -38,6 +78,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), system-ui, sans-serif;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
 }
 
 /* Custom scrollbar */
@@ -58,19 +104,55 @@ body {
   background: var(--foreground);
 }
 
-/* Embla Carousel styles */
+/* Embla Carousel */
 .embla {
   overflow: hidden;
 }
 
-.embla__container {
-  display: flex;
-  gap: 16px;
+/* Hero entrance: pure CSS so the first paint never waits for JS */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-.embla__slide {
-  flex: 0 0 400px;
-  min-width: 0;
+.hero-in {
+  animation: hero-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-in {
+    animation: none;
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Modal animations */
@@ -94,10 +176,150 @@ body {
   }
 }
 
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float-down {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.9;
+  }
+}
+
 .animate-fade-in {
-  animation: fade-in 0.2s ease-out;
+  animation: fade-in 0.25s ease-out;
 }
 
 .animate-scale-in {
   animation: scale-in 0.2s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-float-down {
+  animation: float-down 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-scale-in,
+  .animate-slide-up,
+  .animate-float-down {
+    animation: none;
+  }
+}
+
+/* Blog post typography */
+.prose-post {
+  font-size: 17px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--foreground);
+}
+
+.prose-post h2 {
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 2.4em 0 0.8em;
+}
+
+.prose-post h3 {
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 2em 0 0.6em;
+}
+
+.prose-post p {
+  margin: 1.25em 0;
+}
+
+.prose-post a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-post strong {
+  font-weight: 600;
+}
+
+.prose-post code {
+  font-family: var(--font-azeret-mono), monospace;
+  font-size: 0.85em;
+  background: var(--secondary);
+  padding: 0.15em 0.4em;
+  border-radius: 5px;
+}
+
+.prose-post pre {
+  background: #101013;
+  border: 1px solid rgba(228, 228, 231, 0.08);
+  border-radius: 12px;
+  padding: 1.25em 1.5em;
+  overflow-x: auto;
+  margin: 1.6em 0;
+}
+
+.prose-post pre code {
+  background: none;
+  padding: 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #d4d4d8;
+}
+
+.prose-post ul,
+.prose-post ol {
+  margin: 1.25em 0;
+  padding-left: 1.4em;
+}
+
+.prose-post ul {
+  list-style: disc;
+}
+
+.prose-post ol {
+  list-style: decimal;
+}
+
+.prose-post li {
+  margin: 0.5em 0;
+  padding-left: 0.2em;
+}
+
+.prose-post li::marker {
+  color: var(--muted-foreground);
+}
+
+.prose-post blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25em;
+  margin: 1.6em 0;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.prose-post hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  width: 120px;
+  margin: 3em auto;
 }
