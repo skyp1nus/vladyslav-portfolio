@@ -1,80 +1,71 @@
 import Image from "next/image";
-
-const apps = [
-  {
-    name: "Artman",
-    description:
-      "A film director simulator where you live the life of a boy who loved cinema since childhood. Create your own path in the movie industry.",
-    poster: "/posters/games/ArtmanPoster.webp",
-  },
-  {
-    name: "Soon",
-    description:
-      "Soon",
-    gradient: "from-purple-400 to-indigo-500",
-  },
-];
+import { Reveal } from "./Reveal";
 
 export function Apps() {
   return (
-    <section className="py-24 px-4">
+    <section id="games" className="py-24 px-4">
       <div className="max-w-[1248px] mx-auto">
         {/* Title section */}
         <div className="mb-16">
-          {/* Title */}
           <div className="md:ml-[17%]">
-            <h3 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)]">
-              Games I&apos;m Building
-            </h3>
+            <Reveal>
+              <h3 className="text-3xl sm:text-4xl md:text-[45px] font-extrabold leading-[1.07] tracking-tight text-[var(--foreground)]">
+                Games I&apos;m Building
+              </h3>
+            </Reveal>
           </div>
-          {/* Description - below and to the right */}
           <div className="mt-8 md:mt-[80px] md:ml-[60%]">
-            <p className="text-[15px] font-light leading-[1.74] tracking-wide text-[var(--muted)] max-w-[500px]">
-              I&apos;m passionate about creating games that tell stories. These are projects where I explore new ideas, push my creative boundaries, and bring my visions to life.
-            </p>
+            <Reveal>
+              <p className="text-[15px] font-light leading-[1.74] tracking-wide text-[var(--muted)] max-w-[500px]">
+                I&apos;m passionate about creating games that tell stories.
+                These are projects where I explore new ideas, push my creative
+                boundaries, and bring my visions to life.
+              </p>
+            </Reveal>
           </div>
         </div>
 
-        {/* Apps grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {apps.map((app, index) => (
-            <div
-              key={index}
-              className="bg-[var(--secondary)] rounded-[10px] overflow-hidden flex flex-col group cursor-pointer hover:scale-[1.02] transition-transform duration-300"
-            >
-              {/* App info */}
-              <div className="p-6 md:p-8 flex flex-col gap-2">
-                <h4 className="text-[34px] font-normal tracking-tight text-[var(--foreground)]">
-                  {app.name}
-                </h4>
-                <p className="text-[15px] font-light leading-[1.74] tracking-wide text-[var(--muted)]">
-                  {app.description}
-                </p>
+        {/* Featured game */}
+        <Reveal>
+          <div className="grid md:grid-cols-[1fr_minmax(320px,420px)] bg-[var(--secondary)] border border-[var(--border)] rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[var(--muted-foreground)]">
+            <div className="p-8 md:p-12 flex flex-col justify-center gap-6 order-2 md:order-1">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] px-3 py-1 text-[11px] tracking-wide uppercase text-[var(--muted)]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  In development
+                </span>
               </div>
-
-              {/* App preview */}
-              <div className="overflow-hidden flex-1">
-                {app.poster ? (
-                  <Image
-                    src={app.poster}
-                    alt={`${app.name} poster`}
-                    width={1362}
-                    height={1932}
-                    className="w-full h-auto"
-                  />
-                ) : (
-                  <div
-                    className={`w-full h-full min-h-[400px] md:min-h-[500px] bg-gradient-to-br ${app.gradient} flex items-center justify-center`}
+              <h4 className="text-4xl md:text-5xl font-black tracking-tight text-[var(--foreground)]">
+                Artman
+              </h4>
+              <p className="text-[15px] font-light leading-[1.74] tracking-wide text-[var(--muted)] max-w-[420px]">
+                A film director simulator where you live the life of a boy who
+                loved cinema since childhood. Create your own path in the movie
+                industry.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {["Unity", "C#", "ASP.NET Core"].map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full border border-[var(--border)] px-3 py-1 text-[12px] font-mono text-[var(--muted)]"
                   >
-                    <span className="text-white/50 text-lg font-light">
-                      {app.name} Preview
-                    </span>
-                  </div>
-                )}
+                    {tech}
+                  </span>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
+            {/* Full vertical poster, no cropping */}
+            <div className="relative aspect-[1362/1932] overflow-hidden order-1 md:order-2">
+              <Image
+                src="/posters/games/ArtmanPoster.webp"
+                alt="Artman — key art poster"
+                fill
+                sizes="(min-width: 768px) 420px, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
