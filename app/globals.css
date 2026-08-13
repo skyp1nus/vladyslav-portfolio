@@ -14,6 +14,12 @@
   --muted-foreground: #9f9fa9;
   --border: rgba(39, 39, 42, 0.12);
   --accent: #3b82f6;
+  --heat-0: #dadade;
+  --heat-1: #9a9aa3;
+  --heat-2: #6e6e78;
+  --heat-3: #45454d;
+  --heat-4: #1f1f24;
+  --heat-ring: rgba(39, 39, 42, 0.1);
   color-scheme: light;
 }
 
@@ -25,6 +31,12 @@
   --muted-foreground: #71717a;
   --border: rgba(228, 228, 231, 0.14);
   --accent: #60a5fa;
+  --heat-0: #202024;
+  --heat-1: #55555f;
+  --heat-2: #84848e;
+  --heat-3: #b3b3bc;
+  --heat-4: #ededf0;
+  --heat-ring: rgba(228, 228, 231, 0.08);
   color-scheme: dark;
 }
 
@@ -37,6 +49,12 @@
     --muted-foreground: #71717a;
     --border: rgba(228, 228, 231, 0.14);
     --accent: #60a5fa;
+    --heat-0: #202024;
+    --heat-1: #55555f;
+    --heat-2: #84848e;
+    --heat-3: #b3b3bc;
+    --heat-4: #ededf0;
+    --heat-ring: rgba(228, 228, 231, 0.08);
     color-scheme: dark;
   }
 }
@@ -102,11 +120,6 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--foreground);
-}
-
-/* Embla Carousel */
-.embla {
-  overflow: hidden;
 }
 
 /* Hero entrance: pure CSS so the first paint never waits for JS */
@@ -221,6 +234,235 @@ body {
   .animate-slide-up,
   .animate-float-down {
     animation: none;
+  }
+}
+
+/* Contribution heatmap */
+.gh-graph {
+  --gh-cell: 11px;
+  --gh-gap: 3px;
+  --gh-radius: 2.5px;
+}
+
+@media (min-width: 640px) {
+  .gh-graph {
+    --gh-cell: 12px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gh-graph {
+    --gh-cell: 13px;
+    --gh-gap: 4px;
+    --gh-radius: 3px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .gh-graph {
+    --gh-cell: 18px;
+    --gh-gap: 5px;
+    --gh-radius: 4px;
+  }
+}
+
+/* Flat column-major list — no per-week wrappers */
+.gh-cells {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, var(--gh-cell));
+  grid-auto-columns: var(--gh-cell);
+  gap: var(--gh-gap);
+  contain: layout; /* not paint — that would clip the hover scale */
+}
+
+/* Same column rhythm as the cells; labels are meant to spill past their track */
+.gh-months {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: var(--gh-cell);
+  gap: var(--gh-gap);
+  height: 14px;
+}
+
+/* Every cell is an empty well; the level colour rides on ::after. That way the
+   loading grid and the loaded grid are pixel-identical and the wave only has
+   to fade colour in — nothing appears or disappears. */
+.gh-cell {
+  position: relative;
+  width: var(--gh-cell);
+  height: var(--gh-cell);
+  border-radius: var(--gh-radius);
+  background: var(--heat-0);
+  box-shadow: inset 0 0 0 1px var(--heat-ring);
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 160ms ease;
+}
+
+.gh-cell[data-level="1"]::after,
+.gh-cell[data-level="2"]::after,
+.gh-cell[data-level="3"]::after,
+.gh-cell[data-level="4"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.gh-cell[data-level="1"]::after {
+  background: var(--heat-1);
+}
+.gh-cell[data-level="2"]::after {
+  background: var(--heat-2);
+}
+.gh-cell[data-level="3"]::after {
+  background: var(--heat-3);
+}
+.gh-cell[data-level="4"]::after {
+  background: var(--heat-4);
+}
+.gh-cell[data-level="pad"] {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Column by column, oldest day to today — the year unrolling */
+@keyframes gh-cell-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.gh-cells[data-armed="false"] .gh-cell[data-date]::after {
+  opacity: 0;
+}
+
+.gh-cells[data-armed="true"] .gh-cell[data-date]::after {
+  animation: gh-cell-in 700ms cubic-bezier(0.33, 0, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* A filled animation outranks :hover in the cascade — release it once the
+   wave is done, otherwise the lift never fires. */
+.gh-cells[data-armed="done"] .gh-cell::after {
+  animation: none;
+}
+
+/* Idle life. One of these is picked at random per visit; all animate opacity
+   only. Delays are positive so every cell sits at opacity 1 until its turn —
+   a negative delay would drop it mid-cycle the instant the wave finishes. */
+@keyframes gh-breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes gh-twinkle {
+  0%,
+  38%,
+  54%,
+  86%,
+  100% {
+    opacity: 1;
+  }
+  46% {
+    opacity: 0.28;
+  }
+  93% {
+    opacity: 0.5;
+  }
+}
+
+.gh-cells[data-idle="breathe"] .gh-cell[data-level="2"]::after,
+.gh-cells[data-idle="breathe"] .gh-cell[data-level="3"]::after,
+.gh-cells[data-idle="breathe"] .gh-cell[data-level="4"]::after {
+  animation: gh-breathe 4s ease-in-out infinite;
+  animation-delay: calc(var(--r, 0) * 2s);
+}
+
+.gh-cells[data-idle="twinkle"] .gh-cell[data-level="1"]::after,
+.gh-cells[data-idle="twinkle"] .gh-cell[data-level="2"]::after,
+.gh-cells[data-idle="twinkle"] .gh-cell[data-level="3"]::after,
+.gh-cells[data-idle="twinkle"] .gh-cell[data-level="4"]::after {
+  animation: gh-twinkle 5s ease-in-out infinite;
+  animation-delay: calc(var(--r, 0) * 3s);
+}
+
+/* Phase from the column delay instead of the seed ⇒ reads as a travelling wave */
+.gh-cells[data-idle="drift"] .gh-cell[data-level="1"]::after,
+.gh-cells[data-idle="drift"] .gh-cell[data-level="2"]::after,
+.gh-cells[data-idle="drift"] .gh-cell[data-level="3"]::after,
+.gh-cells[data-idle="drift"] .gh-cell[data-level="4"]::after {
+  animation: gh-breathe 6s ease-in-out infinite;
+  animation-delay: calc(var(--d, 0ms) * 4);
+}
+
+/* Hover last so it outranks the idle rules; animation:none frees up opacity */
+.gh-cells[data-armed="done"] .gh-cell[data-date]:hover {
+  transform: scale(1.3);
+  box-shadow: inset 0 0 0 2px var(--foreground);
+  z-index: 3;
+}
+
+.gh-cells[data-armed="done"] .gh-cell[data-date]:hover::after {
+  animation: none;
+  opacity: 1;
+}
+
+/* Position snaps; only the pill fades and lifts, so it never flies in from 0,0 */
+.gh-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(320px, 100%); /* widest possible label measures ~306px */
+  z-index: 5;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 170ms ease;
+}
+
+.gh-tip > span {
+  transform: translateY(5px);
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Flipped below the cell — lift from the other side */
+.gh-tip[data-flip="true"] > span {
+  transform: translateY(-5px);
+}
+
+.gh-tip[data-visible="true"] {
+  opacity: 1;
+}
+
+.gh-tip[data-visible="true"] > span {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-cells[data-idle] .gh-cell[data-level]::after,
+  .gh-cells[data-armed="false"] .gh-cell[data-date]::after,
+  .gh-cells[data-armed="true"] .gh-cell[data-date]::after {
+    animation: none;
+    opacity: 1;
+  }
+  .gh-cell {
+    transform: none;
+  }
+  .gh-cell,
+  .gh-tip,
+  .gh-tip > span {
+    transition: none;
+    transform: none;
   }
 }
 

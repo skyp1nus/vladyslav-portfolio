@@ -1,6 +1,6 @@
 import { Header } from "./components/Header";
 import { WhoAmI } from "./components/WhoAmI";
-import { BeautifulSoftware } from "./components/BeautifulSoftware";
+import { Contributions } from "./components/Contributions";
 import { Teams } from "./components/Teams";
 import { Apps } from "./components/Apps";
 import { Blog } from "./components/Blog";
@@ -15,7 +15,7 @@ export default function Home() {
       <main className="max-w-[1425px] mx-auto">
         <article>
           <WhoAmI />
-          <BeautifulSoftware />
+          <Contributions />
           <Teams />
           <Apps />
           <Blog />
